@@ -5,17 +5,16 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/interfaces/IERC2981.sol";
 
-error UDNFT__MinterAlreadyOwnsNFT();
-error UDNFT__TokenIDNonExistent();
-error UDNFT__InvalidCaller();
-error UDNFT__CantSetToZeroAddress();
-error UDNFT__InvalidTreasuryAddress();
-error UDNFT__WithdrawFailed();
-error UDNFT__InvalidTokenID();
-
 contract UDGenesisNFT is ERC1155, IERC2981, Ownable {
-    uint256 constant ROYALTY_PERCENTAGE = 100; // 10%
-    uint256 constant ROYALTY_DENOMINATOR = 1000;
+    //Error
+    error UDNFT__MinterAlreadyOwnsNFT();
+    error UDNFT__TokenIDNonExistent();
+    error UDNFT__InvalidCaller();
+    error UDNFT__CantSetToZeroAddress();
+    error UDNFT__InvalidTreasuryAddress();
+    error UDNFT__WithdrawFailed();
+    error UDNFT__InvalidTokenID();
+
     uint256 constant MAX_MINT_PER_ADDRESS = 1;
     uint256 constant DENO = 1000;
 

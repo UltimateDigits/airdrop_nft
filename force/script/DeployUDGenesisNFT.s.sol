@@ -12,11 +12,7 @@ contract DeployUDGenesisNFT is Script {
 
     function run() public returns (UDGenesisNFT) {
         vm.startBroadcast();
-        genesisNFT = new UDGenesisNFT(
-            "UDigits-Genesis-NFT",
-            "UGNFT",
-            0xE6F3889C8EbB361Fa914Ee78fa4e55b1BBed3A96
-        );
+        genesisNFT = new UDGenesisNFT();
         vm.stopBroadcast();
         return genesisNFT;
     }
