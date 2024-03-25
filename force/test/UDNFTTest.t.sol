@@ -22,7 +22,7 @@ contract UDGenesisNFTTest is Test {
     }
 
     function testConstructor() public {
-        assertEq(udGenesisNFT.name(), "UDigits-Genesis-NFT");
+        assertEq(udGenesisNFT.name(), "Ultimate Digits Genesis NFT");
         assertEq(udGenesisNFT.symbol(), "UGNFT");
         assertEq(udGenesisNFT.royalty(), 100);
         assertEq(
@@ -77,7 +77,7 @@ contract UDGenesisNFTTest is Test {
         uint256 tokenId = 1;
         string memory newURI = "https://example.com/metadata";
 
-        udGenesisNFT.setURI(tokenId, newURI);
-        assertEq(udGenesisNFT.idTokenURI(tokenId), newURI);
+        udGenesisNFT.setMetadataURI(newURI);
+        assertEq(udGenesisNFT.idToTokenURI(tokenId), newURI);
     }
 }

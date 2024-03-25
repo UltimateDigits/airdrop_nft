@@ -18,16 +18,17 @@ contract UDGenesisNFT is ERC1155, IERC2981, Ownable {
     uint256 constant MAX_MINT_PER_ADDRESS = 1;
     uint256 constant DENO = 1000;
 
-    uint256 public nextTokenId;
+    uint256 public tokenId;
     uint256 public royalty;
     address public i_treasuryAddress =
-        0xE6F3889C8EbB361Fa914Ee78fa4e55b1BBed3A96;
-    mapping(uint256 => string) public idTokenURI;
+        0xdDD293F635f2793E418Ad5Fd5044c1A49C2EF84D;
 
-    string public name = "UDigits-Genesis-NFT";
+    mapping(uint256 => string) public idToTokenURI;
+
+    string public name = "Ultimate Points Genesis NFT";
     string public symbol = "UGNFT";
     string tokenUri =
-        "https://cloudflare-ipfs.com/ipfs/bafybeih3plfvrw66whl7zklger755kftymkiqyjfofru5bccjufmysmc4m/NFT1.json";
+        "https://cloudflare-ipfs.com/ipfs/bafybeiaeynocgow4bcfws4ye44z3vqfy7slhj64i4krpok6vjh5bdnpo6m/NFT1.json";
 
     modifier isEOA() {
         if (tx.origin != msg.sender) revert UDNFT__InvalidCaller();
@@ -36,20 +37,21 @@ contract UDGenesisNFT is ERC1155, IERC2981, Ownable {
 
     constructor() ERC1155(tokenUri) Ownable(msg.sender) {
         royalty = 100;
+        idToTokenURI[tokenId] = tokenUri;
     }
 
     function mintNFT() external isEOA {
-        if (balanceOf(_msgSender(), nextTokenId) >= MAX_MINT_PER_ADDRESS)
+        if (balanceOf(_msgSender(), tokenId) >= MAX_MINT_PER_ADDRESS)
             revert UDNFT__MinterAlreadyOwnsNFT();
 
-        _mint(_msgSender(), nextTokenId, 1, "");
+        _mint(_msgSender(), tokenId, 1, "");
     }
 
     function royaltyInfo(
-        uint256 tokenId,
+        uint256 _tokenId,
         uint256 salePrice
     ) external view override returns (address, uint256) {
-        if (tokenId != 0) revert UDNFT__InvalidTokenID();
+        if (_tokenId != 0) revert UDNFT__InvalidTokenID();
         uint256 royaltyAmount = (salePrice * royalty) / DENO;
         return (i_treasuryAddress, royaltyAmount);
     }
@@ -68,7 +70,8 @@ contract UDGenesisNFT is ERC1155, IERC2981, Ownable {
         if (!success) revert UDNFT__WithdrawFailed();
     }
 
-    function setURI(uint _id, string memory _uri) external onlyOwner {
-        idTokenURI[_id] = _uri;
+    function setMetadataURI(string memory uri) public onlyOwner {
+        _setURI(uri);
+        idToTokenURI[tokenId] = uri;
     }
 }
