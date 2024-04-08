@@ -7,10 +7,12 @@ import {UDGenesisNFT} from "../src/UDNFT.sol";
 
 contract DeployUDGenesisNFT is Script {
     UDGenesisNFT genesisNFT;
+    bytes32 public merkleRoot =
+        0x46a87fad77d0a97166a8020104250bb8f9378985b0980daf62a7ab81cf029de5;
 
     function run() public returns (UDGenesisNFT) {
         vm.startBroadcast();
-        genesisNFT = new UDGenesisNFT();
+        genesisNFT = new UDGenesisNFT(merkleRoot);
         vm.stopBroadcast();
         return genesisNFT;
     }
